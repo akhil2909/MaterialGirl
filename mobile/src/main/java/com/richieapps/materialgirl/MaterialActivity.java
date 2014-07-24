@@ -1,5 +1,8 @@
 package com.richieapps.materialgirl;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -7,31 +10,34 @@ import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.Toolbar;
 
 
 public class MaterialActivity extends Activity {
-    View cardImage;
+    View cardImage, fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material);
+        cardImage = findViewById(R.id.cardImage);
+        fab = findViewById(R.id.fab);
         int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
         Outline outline = new Outline();
         outline.setOval(0, 0, size, size);
-        findViewById(R.id.fab).setOutline(outline);
+        fab.setOutline(outline);
         Toolbar toolbar = new Toolbar(this);
         toolbar.setTitle("ToolBar Title");
+        toolbar.setSubtitle("A Subtitle");
         toolbar.inflateMenu(R.menu.incard_toolbar_menu);
         toolbar.setBackground(new ColorDrawable(Color.YELLOW));
-        toolbar.showOverflowMenu();
         ((FrameLayout)findViewById(R.id.toolbar_frame)).addView(toolbar);
-        cardImage = findViewById(R.id.cardImage);
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -48,8 +54,41 @@ public class MaterialActivity extends Activity {
                 return false;
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doCircularReveal(view);
+            }
+        });
     }
 
+    private void doCircularReveal(View view){
+        final View toReveal = findViewById(R.id.hiddenText);
+        int cx = (view.getLeft() + view.getRight()) / 2;
+        int cy = (view.getTop() + view.getBottom()) / 2;
+        float radius = Math.max(toReveal.getWidth(), toReveal.getHeight()) * 2.0f;
+        toReveal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doCircularReveal(view);
+            }
+        });
+        if (toReveal.getVisibility() == View.INVISIBLE) {
+            toReveal.setVisibility(View.VISIBLE);
+            ViewAnimationUtils.createCircularReveal(toReveal, cx, cy, 0, radius).start();
+        } else {
+            ValueAnimator reveal = ViewAnimationUtils.createCircularReveal(
+                    toReveal, cx, cy, radius, 0);
+            reveal.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    toReveal.setVisibility(View.INVISIBLE);
+                }
+            });
+            reveal.start();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
