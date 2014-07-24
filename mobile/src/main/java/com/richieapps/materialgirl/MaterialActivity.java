@@ -1,17 +1,48 @@
 package com.richieapps.materialgirl;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Outline;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.Toolbar;
 
 
 public class MaterialActivity extends Activity {
-
+    View cardImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material);
+        int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
+        Outline outline = new Outline();
+        outline.setOval(0, 0, size, size);
+        findViewById(R.id.fab).setOutline(outline);
+        Toolbar toolbar = new Toolbar(this);
+        toolbar.setTitle("ToolBar Title");
+        toolbar.inflateMenu(R.menu.incard_toolbar_menu);
+        toolbar.setBackground(new ColorDrawable(Color.YELLOW));
+        toolbar.showOverflowMenu();
+        ((FrameLayout)findViewById(R.id.toolbar_frame)).addView(toolbar);
+        cardImage = findViewById(R.id.cardImage);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.ic_action_share){
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MaterialActivity.this, cardImage, "cardImage");
+                    Intent intent = new Intent(MaterialActivity.this, DetailActivity.class);
+                    startActivity(intent, options.toBundle());
+
+                }
+                return false;
+            }
+        });
     }
 
 
