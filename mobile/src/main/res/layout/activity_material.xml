@@ -46,4 +46,13 @@
         android:src="@drawable/ic_action_new"
         android:stateListAnimator="@anim/anim" />
 
+    <TextView
+        android:id="@+id/hiddenText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cccccccc"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="YOU FOUND TEH HIDDEN TEXT!!1!"/>
+
 </RelativeLayout>

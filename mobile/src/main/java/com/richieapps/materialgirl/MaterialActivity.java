@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,10 @@ public class MaterialActivity extends Activity {
                     Intent intent = new Intent(MaterialActivity.this, DetailActivity.class);
                     startActivity(intent, options.toBundle());
 
+                }
+                if(menuItem.getItemId() == R.id.ic_action_remove){
+                    Intent intent = new Intent(MaterialActivity.this, RecyclerViewActivity.class);
+                    startActivity(intent);
                 }
                 return false;
             }
