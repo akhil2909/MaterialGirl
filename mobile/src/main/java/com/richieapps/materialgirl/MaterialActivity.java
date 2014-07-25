@@ -68,12 +68,6 @@ public class MaterialActivity extends Activity {
         int cx = (view.getLeft() + view.getRight()) / 2;
         int cy = (view.getTop() + view.getBottom()) / 2;
         float radius = Math.max(toReveal.getWidth(), toReveal.getHeight()) * 2.0f;
-        toReveal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doCircularReveal(view);
-            }
-        });
         if (toReveal.getVisibility() == View.INVISIBLE) {
             toReveal.setVisibility(View.VISIBLE);
             ViewAnimationUtils.createCircularReveal(toReveal, cx, cy, 0, radius).start();
