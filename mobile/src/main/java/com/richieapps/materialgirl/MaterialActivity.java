@@ -6,10 +6,8 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.view.Menu;
@@ -39,24 +37,24 @@ public class MaterialActivity extends Activity {
         toolbar.setTitle("ToolBar Title");
         toolbar.setSubtitle("A Subtitle");
         toolbar.inflateMenu(R.menu.incard_toolbar_menu);
-        Palette.generateAsync(((BitmapDrawable)cardImage .getDrawable()).getBitmap(), new Palette.PaletteAsyncListener() {
+        Palette.generateAsync(((BitmapDrawable) cardImage.getDrawable()).getBitmap(), new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
                 toolbar.setBackgroundColor(palette.getLightMutedColor().getRgb());
             }
         });
-        ((FrameLayout)findViewById(R.id.toolbar_frame)).addView(toolbar);
+        ((FrameLayout) findViewById(R.id.toolbar_frame)).addView(toolbar);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.ic_action_share){
+                if (menuItem.getItemId() == R.id.ic_action_share) {
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MaterialActivity.this, cardImage, "cardImage");
                     Intent intent = new Intent(MaterialActivity.this, DetailActivity.class);
                     startActivity(intent, options.toBundle());
 
                 }
-                if(menuItem.getItemId() == R.id.ic_action_remove){
+                if (menuItem.getItemId() == R.id.ic_action_remove) {
                     Intent intent = new Intent(MaterialActivity.this, RecyclerViewActivity.class);
                     startActivity(intent);
                 }
@@ -72,7 +70,7 @@ public class MaterialActivity extends Activity {
         });
     }
 
-    private void doCircularReveal(View view){
+    private void doCircularReveal(View view) {
         final View toReveal = findViewById(R.id.hiddenText);
         int cx = (view.getLeft() + view.getRight()) / 2;
         int cy = (view.getTop() + view.getBottom()) / 2;
@@ -111,4 +109,5 @@ public class MaterialActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
