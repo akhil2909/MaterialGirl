@@ -8,34 +8,43 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Outline;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toolbar;
 
 
 public class MaterialActivity extends Activity {
-    View cardImage, fab;
+    View fab;
+    ImageView cardImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material);
-        cardImage = findViewById(R.id.cardImage);
+        cardImage = (ImageView) findViewById(R.id.cardImage);
         fab = findViewById(R.id.fab);
         int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
         Outline outline = new Outline();
         outline.setOval(0, 0, size, size);
         fab.setOutline(outline);
-        Toolbar toolbar = new Toolbar(this);
+        final Toolbar toolbar = new Toolbar(this);
         toolbar.setTitle("ToolBar Title");
         toolbar.setSubtitle("A Subtitle");
         toolbar.inflateMenu(R.menu.incard_toolbar_menu);
-        toolbar.setBackground(new ColorDrawable(Color.YELLOW));
+        Palette.generateAsync(((BitmapDrawable)cardImage .getDrawable()).getBitmap(), new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                toolbar.setBackgroundColor(palette.getLightMutedColor().getRgb());
+            }
+        });
         ((FrameLayout)findViewById(R.id.toolbar_frame)).addView(toolbar);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

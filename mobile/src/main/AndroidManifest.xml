@@ -26,7 +26,11 @@
         </activity>
         <activity
             android:name=".RecyclerViewActivity"
-            android:label="@string/title_activity_recycler_view" >
+            android:label="@string/title_activity_recycler_view"
+            android:parentActivityName=".MaterialActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.richieapps.materialgirl.MaterialActivity" />
         </activity>
     </application>
 
