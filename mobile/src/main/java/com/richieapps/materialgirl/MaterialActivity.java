@@ -42,7 +42,7 @@ public class MaterialActivity extends Activity {
         Palette.generateAsync(((BitmapDrawable)cardImage .getDrawable()).getBitmap(), new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
-                toolbar.setBackgroundColor(palette.getLightMutedColor().getRgb());
+                toolbar.setBackgroundColor(palette.getLightVibrantColor().getRgb());
             }
         });
         ((FrameLayout)findViewById(R.id.toolbar_frame)).addView(toolbar);
