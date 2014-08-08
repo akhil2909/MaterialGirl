@@ -10,6 +10,9 @@ import android.graphics.Outline;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,16 +47,17 @@ public class MaterialActivity extends Activity {
             }
         });
         ((FrameLayout) findViewById(R.id.toolbar_frame)).addView(toolbar);
-
+        cardImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MaterialActivity.this, cardImage, "cardImage");
+                Intent intent = new Intent(MaterialActivity.this, DetailActivity.class);
+                startActivity(intent, options.toBundle());
+            }
+        });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.ic_action_share) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MaterialActivity.this, cardImage, "cardImage");
-                    Intent intent = new Intent(MaterialActivity.this, DetailActivity.class);
-                    startActivity(intent, options.toBundle());
-
-                }
                 if (menuItem.getItemId() == R.id.ic_action_remove) {
                     Intent intent = new Intent(MaterialActivity.this, RecyclerViewActivity.class);
                     startActivity(intent);
@@ -61,7 +65,6 @@ public class MaterialActivity extends Activity {
                 return false;
             }
         });
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
