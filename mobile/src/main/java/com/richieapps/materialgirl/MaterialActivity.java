@@ -58,15 +58,11 @@ public class MaterialActivity extends ActionBarActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.ic_action_share) {
+                if (menuItem.getItemId() == R.id.ic_action_remove) {
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MaterialActivity.this, cardImage, "cardImage");
                     Intent intent = new Intent(MaterialActivity.this, DetailActivity.class);
                     startActivity(intent, options.toBundle());
 
-                }
-                if (menuItem.getItemId() == R.id.ic_action_remove) {
-                    Intent intent = new Intent(MaterialActivity.this, RecyclerViewActivity.class);
-                    startActivity(intent);
                 }
                 return false;
             }
