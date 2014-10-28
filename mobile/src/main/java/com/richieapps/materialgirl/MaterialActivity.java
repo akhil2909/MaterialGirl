@@ -2,24 +2,28 @@ package com.richieapps.materialgirl;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toolbar;
 
 
-public class MaterialActivity extends Activity {
+public class MaterialActivity extends ActionBarActivity {
     View fab;
     ImageView cardImage;
 
@@ -29,10 +33,16 @@ public class MaterialActivity extends Activity {
         setContentView(R.layout.activity_material);
         cardImage = (ImageView) findViewById(R.id.cardImage);
         fab = findViewById(R.id.fab);
-        int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
-        Outline outline = new Outline();
-        outline.setOval(0, 0, size, size);
-        fab.setOutline(outline);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
+            fab.setOutlineProvider(new ViewOutlineProvider() {
+                @TargetApi(21)
+                @Override
+                public void getOutline(View view, Outline outline) {
+                    outline.setOval(0, 0, size, size);
+                }
+            });
+        }
         final Toolbar toolbar = new Toolbar(this);
         toolbar.setTitle("ToolBar Title");
         toolbar.setSubtitle("A Subtitle");
@@ -40,7 +50,7 @@ public class MaterialActivity extends Activity {
         Palette.generateAsync(((BitmapDrawable) cardImage.getDrawable()).getBitmap(), new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
-                toolbar.setBackgroundColor(palette.getLightVibrantColor().getRgb());
+                toolbar.setBackgroundColor(palette.getLightVibrantColor(Color.RED));
             }
         });
         ((FrameLayout) findViewById(R.id.toolbar_frame)).addView(toolbar);
@@ -49,7 +59,7 @@ public class MaterialActivity extends Activity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.ic_action_share) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MaterialActivity.this, cardImage, "cardImage");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MaterialActivity.this, cardImage, "cardImage");
                     Intent intent = new Intent(MaterialActivity.this, DetailActivity.class);
                     startActivity(intent, options.toBundle());
 
@@ -79,7 +89,7 @@ public class MaterialActivity extends Activity {
             toReveal.setVisibility(View.VISIBLE);
             ViewAnimationUtils.createCircularReveal(toReveal, cx, cy, 0, radius).start();
         } else {
-            ValueAnimator reveal = ViewAnimationUtils.createCircularReveal(
+            Animator reveal = ViewAnimationUtils.createCircularReveal(
                     toReveal, cx, cy, radius, 0);
             reveal.addListener(new AnimatorListenerAdapter() {
                 @Override

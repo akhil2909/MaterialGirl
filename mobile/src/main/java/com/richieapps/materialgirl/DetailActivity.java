@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.view.ViewAnimationUtils;
 
 import com.richieapps.materialgirl.R;
 
-public class DetailActivity extends Activity {
+public class DetailActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class DetailActivity extends Activity {
             toReveal.setVisibility(View.VISIBLE);
             ViewAnimationUtils.createCircularReveal(toReveal, cx, cy, 0, radius).start();
         } else {
-            ValueAnimator reveal = ViewAnimationUtils.createCircularReveal(
+            Animator reveal = ViewAnimationUtils.createCircularReveal(
                     toReveal, cx, cy, radius, 0);
             reveal.addListener(new AnimatorListenerAdapter() {
                 @Override
