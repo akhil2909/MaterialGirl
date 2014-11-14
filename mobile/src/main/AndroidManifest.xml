@@ -39,6 +39,22 @@
                 <category android:name="com.wta.android.intent.category.MATERIAL" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.richieapps.materialgirl.UiTintActivity"
+            android:label="@string/title_activity_ui_tint"
+            android:parentActivityName="com.richieapps.materialgirl.MaterialActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.richieapps.materialgirl.MaterialActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.SAMPLE_CODE" />
+                <category android:name="com.wta.android.intent.category.MATERIAL" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name="com.richieapps.materialgirl.MainActivity"
             android:label="@string/title_activity_main" >
