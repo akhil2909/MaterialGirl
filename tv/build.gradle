@@ -2,19 +2,19 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 'android-L'
+    compileSdkVersion 21
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "com.richieapps.materialgirl"
-        minSdkVersion 'L'
-        targetSdkVersion 'L'
+        minSdkVersion 21
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,9 +25,9 @@ dependencies {
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     // You must install or update the Support Repository through the SDK manager to use this dependency.
-    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
     // You must install or update the Support Repository through the SDK manager to use this dependency.
-    compile 'com.android.support:leanback-v17:+'
-    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:leanback-v17:21.0.3'
+    compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.squareup.picasso:picasso:2.3.2'
 }
